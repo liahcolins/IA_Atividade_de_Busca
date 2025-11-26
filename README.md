@@ -1,5 +1,4 @@
-# Algoritmo de Busca $A^{*}$ para Navegação em Grade com Obstáculos
-
+# Algoritmo de Busca A (A-Star) em Grafos com NetworkX*
 Aluno: Débora Letícia Silva dos Santos, Felipe Portela Aguilar de Oliveira e Liah Renata Colins da Silva
 
 Disciplina: Inteligência Artificial
@@ -8,85 +7,46 @@ Professor: Alex Oliveira Barradas Filho
 
 # 1. Introdução
 
-O presente trabalho tem como objetivo modelar um problema de pathfinding em um ambiente de grade 2D com obstáculos e implementar a solução de caminho ótimo utilizando o algoritmo de busca $A^{*}$  (A-star). A implementação foi desenvolvida em Python, empregando a biblioteca Pygame para a simulação visual, além de NetworkX e Matplotlib para a geração gráfica do resultado final.
+O presente trabalho tem como objetivo demonstrar a aplicação do algoritmo de busca A* (A-Star) para encontrar o caminho de menor custo em um grafo direcionado e ponderado. A implementação foi desenvolvida em Python, utilizando a biblioteca NetworkX para a estruturação do grafo e execução do algoritmo, e a biblioteca Matplotlib para a visualização gráfica dos nós, arestas e do caminho encontrado.
 
-O algoritmo  $A^{*}$ foi selecionado por sua eficiência em desviar de obstáculos enquanto minimiza o custo total do trajeto, tornando-o uma escolha robusta e amplamente utilizada em problemas de busca de caminhos.
+Diferente de abordagens baseadas em grades físicas (grids), este projeto foca na abstração de nós e arestas (como cidades conectadas por estradas), onde cada conexão possui um peso (custo real) e cada nó possui uma heurística associada.
 
 # 2. Modelagem do Problema
 
-## 2.1 Definição do Problema
+2.1 Definição do Cenário O problema consiste em encontrar a rota ótima entre um Nó Inicial (A) e um Nó Objetivo (E) em um grafo pré-definido.
 
-O problema consiste em encontrar a rota de menor custo entre um ponto inicial (coordenada $x, y$) e um ponto objetivo em uma grade de tamanho fixo ($600 \times 600$ pixels), contornando um conjunto de obstáculos fixos definidos no código.
+2.2 Estrutura do Grafo O ambiente é modelado como um grafo direcionado, composto por:
 
-## 2.2 Estrutura do Ambiente
+Nós (Vértices): 5 nós rotulados de 'A' a 'E'.
 
-O ambiente foi modelado como uma grade discreta onde:
+Arestas (Conexões): Ligações direcionadas entre os nós, onde cada aresta possui um atributo de peso representando o custo real do deslocamento. Por exemplo, mover de A para B tem custo 5.
 
-Nós: Representam as coordenadas $(x, y)$ acessíveis na tela, espaçadas por um tamanho de bloco de 20 pixels.
+2.3 Função de Avaliação A* O algoritmo utiliza a função f(n) = g(n) + h(n), onde:
 
-Movimentos: São permitidos movimentos ortogonais (Cima, Baixo, Esquerda, Direita).
+g(n): É o custo real acumulado do nó inicial até o nó atual (soma dos pesos das arestas percorridas).
 
-Obstáculos: Conjunto de coordenadas intransponíveis (paredes e barreiras).
+h(n): É a heurística, ou seja, a estimativa do nó atual até o objetivo.
 
-## 2.3 Função de Avaliação $A^{*}$
+Neste projeto, os valores heurísticos foram definidos de forma fixa (tabelada) para simular o conhecimento prévio da distância até o destino. A tabela utilizada define que a distância estimada de A é 11, de B é 6, de C é 7, de D é 3, e de E é 0 (pois é o objetivo).
 
-O algoritmo utiliza a função de custo padrão $f(n) = g(n) + h(n)$, onde:
+# 3. Implementação
 
-$g(n)$: Custo real do passo (neste código, cada movimento tem custo 1).
+3.1 Bibliotecas Utilizadas Foram utilizadas a biblioteca NetworkX, para criação da estrutura de dados do grafo e para o cálculo do caminho (utilizando a função nativa astar_path), e a biblioteca Matplotlib, para plotar o grafo visualmente e permitir a identificação dos elementos por cores.
 
-$h(n)$: Heurística calculada pela Distância de Manhattan, ideal para grades onde o movimento diagonal não é permitido.
+3.2 Lógica do Código O código opera em três etapas principais. Primeiro, ocorre a construção, onde o grafo é montado adicionando as arestas ponderadas. Em seguida, a busca é realizada executando a função do NetworkX, que recebe como parâmetro uma função customizada de heurística que retorna os valores pré-configurados.
 
-# 3. Implementação e Resultados
+Por fim, ocorre a visualização. O nó de início é colorido de verde, o destino de vermelho, e os demais de azul claro. As arestas que compõem a solução ótima são destacadas com uma linha mais grossa na cor azul, enquanto as rotas descartadas permanecem em cinza. O gráfico exibe também os custos das arestas e as heurísticas dos nós.
 
-## 3.1 Ambiente de Desenvolvimento
+# 4. Como Executar
 
-O código-fonte foi desenvolvido em Python. A lógica de busca utiliza a estrutura de dados heapq (fila de prioridade) para eficiência, enquanto a visualização é dividida entre Pygame (simulação dinâmica) e Matplotlib/NetworkX (geração de imagem estática do grafo).
+Para reproduzir o experimento, é necessário ter a linguagem Python instalada no computador. Além disso, é preciso instalar as bibliotecas "networkx" e "matplotlib" através do gerenciador de pacotes do Python (pip).
 
-## 3.2 Estrutura do Código
+Após a instalação das dependências, basta executar o script principal.
 
-A solução implementada difere do uso nativo de bibliotecas de grafos, optando por uma implementação manual do algoritmo para maior controle sobre a grade. As principais funções são:
+# 5. Resultados Esperados
 
-Função Heurística (distancia_manhattan):
+Ao executar o código, o sistema apresentará dois resultados. No console ou terminal, será impressa a sequência de nós visitados (Caminho Ótimo: A, C, D, E) e o Custo Total da distância (que neste caso é 13). Simultaneamente, uma janela gráfica será aberta exibindo o desenho do grafo com a rota sugerida destacada em azul.
 
-Calcula a estimativa de custo restante utilizando a fórmula $|x_1 - x_2| + |y_1 - y_2|$. Esta função guia o algoritmo em direção ao objetivo.
+# 6. Conclusão
 
-Algoritmo A (a_star_busca):*
-
-Esta é a função central. Em vez de usar uma função pronta do NetworkX para a busca, o algoritmo foi implementado manualmente:
-
-Utiliza uma lista fronteira gerenciada por heapq.heappush e heapq.heappop para expandir sempre o nó com menor custo $f$.
-
-Mantém dicionários g_score e veio_de para rastrear o custo atual e reconstruir o caminho final.
-
-Verifica colisões comparando as coordenadas vizinhas com o conjunto obstaculos_fixos.
-
-Visualização e Exportação (salvar_grafo_png):
-
-Após o cálculo do caminho, esta função utiliza nx.grid_2d_graph para criar uma representação visual dos nós visitados e obstáculos, salvando o resultado final como uma imagem PNG através do matplotlib.pyplot.
-
-## 3.3 Demonstração e Solução
-
-Ao executar o script (loop_jogo), o sistema realiza os seguintes passos:
-
-Calcula a rota entre o Início $(40, 40)$ e o Objetivo $(540, 540)$.
-
-Exibe a simulação da "Cobra" percorrendo o caminho na janela do Pygame.
-
-Gera um arquivo de imagem (snake_caminho_grafo.png) ilustrando o grafo.
-
-Output do Console:
-
-Gerando imagem do grafo... Aguarde.
-
-Rota encontrada! [N] passos.
-SUCESSO! O gráfico foi salvo como 'snake_caminho_grafo.png' na pasta do projeto.
-
-# 4. Análise Crítica e Conclusão
-
-## 4.1 Limitações da Implementação
-
-A implementação atual utiliza uma grade uniforme. A função distancia_manhattan é perfeitamente adequada para movimentos em 4 direções, mas se movimentos diagonais fossem permitidos, seria necessário alterar a heurística para a Distância Euclidiana ou Chebyshev para manter a admissibilidade.
-
-## 4.2 Conclusão
-
-O trabalho implementou com sucesso o algoritmo $A^{*}$ "do zero", sem depender de funções de busca prontas ("caixa preta"), demonstrando o entendimento da lógica de filas de prioridade e custos heurísticos. A integração com o Pygame permitiu validar visualmente que o agente desvia corretamente das paredes e obstáculos configurados.
+A implementação demonstrou com sucesso o uso da biblioteca NetworkX para resolver problemas de pathfinding. A visualização gerada facilitou o entendimento de como o algoritmo prioriza certas rotas baseando-se na soma do custo real com a estimativa heurística, validando a teoria de busca informada estudada na disciplina.
