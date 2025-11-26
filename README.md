@@ -41,7 +41,7 @@ Por fim, ocorre a visualização. O nó de início é colorido de verde, o desti
 
 Para reproduzir o experimento, é necessário ter a linguagem Python instalada no computador. Além disso, é preciso instalar as bibliotecas "networkx" e "matplotlib" através do gerenciador de pacotes do Python (pip).
 
-Após a instalação das dependências, basta executar o script principal.
+Após a instalação das dependências, basta executar o script principal usando o comando: py busca_a_com_tela.py
 
 # 5. Resultados Esperados
 
