@@ -50,3 +50,8 @@ Ao executar o código, o sistema apresentará dois resultados. No console ou ter
 # 6. Conclusão
 
 A implementação demonstrou com sucesso o uso da biblioteca NetworkX para resolver problemas de pathfinding. A visualização gerada facilitou o entendimento de como o algoritmo prioriza certas rotas baseando-se na soma do custo real com a estimativa heurística, validando a teoria de busca informada estudada na disciplina.
+
+# 7. Vídeo Demonstração
+
+[Acesse o repositório oficial](https://youtu.be/LA9ieeddQ3k)
+
